@@ -17,15 +17,23 @@ class BinarySearchTree {
   }
 
   add(data) {
-    this.nodeRoot = addNode(data);
+    this.nodeRoot = addNode(data, this.nodeRoot);
 
     function addNode(data, node) {
       if (!node) {
         return new Node(data);
       }
 
-      
+      if (node.value < data) {
+        node.right = addNode(data, node.right);
+      } else if (node.value > data) {
+        node.left = addNode(data, node.left);
+      }
+
+      return node;
     }
+
+    
   }
 
   has(/* data */) {
