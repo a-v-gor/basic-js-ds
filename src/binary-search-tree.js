@@ -32,18 +32,42 @@ class BinarySearchTree {
 
       return node;
     }
+  }
 
+  has(data) {
+    return searchData(data, this.nodeRoot) 
     
+    function searchData(data, node) {
+      if (!node) {
+        return false;
+      }
+
+      if (node.value < data) {
+        return searchData(data, node.right);
+      } else if (node.value > data) {
+        return searchData(data, node.left);
+      }
+
+      return true;
+    }
   }
 
-  has(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+  find(data) {
+    return findNode(data, this.nodeRoot);
 
-  find(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    function findNode(data, node) {
+      if (!node) {
+        return null;
+      }
+
+      if (node.value < data) {
+        return searchNode(data, node.right);
+      } else if (node.value > data) {
+        return searchNode(data, node.left);
+      }
+
+      return node;
+    }
   }
 
   remove(/* data */) {
