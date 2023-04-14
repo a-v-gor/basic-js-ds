@@ -24,9 +24,9 @@ class BinarySearchTree {
         return new Node(data);
       }
 
-      if (node.value < data) {
+      if (node.data < data) {
         node.right = addNode(data, node.right);
-      } else if (node.value > data) {
+      } else if (node.data > data) {
         node.left = addNode(data, node.left);
       }
 
@@ -42,9 +42,9 @@ class BinarySearchTree {
         return false;
       }
 
-      if (node.value < data) {
+      if (node.data < data) {
         return searchData(data, node.right);
-      } else if (node.value > data) {
+      } else if (node.data > data) {
         return searchData(data, node.left);
       }
 
@@ -60,29 +60,81 @@ class BinarySearchTree {
         return null;
       }
 
-      if (node.value < data) {
-        return searchNode(data, node.right);
-      } else if (node.value > data) {
-        return searchNode(data, node.left);
+      if (node.data < data) {
+        return findNode(data, node.right);
+      } else if (node.data > data) {
+        return findNode(data, node.left);
       }
 
       return node;
     }
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+    this.nodeRoot = removeNode(data, this.nodeRoot);
+    
+    function removeNode(data, node) {
+      if (!node) {
+        return null;
+      }
+
+      if (node.data < data) {
+        node.right = removeNode(data, node.right);
+        return node;
+      } else if (node.data > data) {
+        node.left = removeNode(data, node.left);
+        return node;
+      } else {
+        if (!node.left && !node.right) {
+          return null;
+        }
+
+        if (!node.left) {
+          node = node.right;
+          return node;
+        }
+
+        if (!node.right) {
+          node = node.left;
+          return node;
+        }
+
+        let maxFromLeft = node.left;
+        while (maxFromLeft.right) {
+          maxFromLeft = maxFromLeft.right;
+        }
+        node.data = maxFromLeft.data;
+        node.left = removeNode(maxFromLeft.data, node.left);
+
+        return node;
+      }
+    }
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this.nodeRoot) {
+      return false;
+    }
+
+    let node = this.nodeRoot;
+    while (node.left) {
+      node = node.left;
+    }
+
+    return node.data;
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (!this.nodeRoot) {
+      return false;
+    }
+
+    let node = this.nodeRoot;
+    while (node.right) {
+      node = node.right;
+    }
+
+    return node.data;
   }
 }
 
